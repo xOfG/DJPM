@@ -22,7 +22,6 @@ import com.example.calculator.ui.theme.components.fancyButton
 
 @Preview(showBackground = true)
 
-
 @Composable
         fun CalculatorScreen(modifier: Modifier = Modifier) {
 
@@ -35,27 +34,27 @@ import com.example.calculator.ui.theme.components.fancyButton
                         Text( text = numberString, fontSize = 52.sp)
 
                         Row{
-                                fancyButton(label = "7",onClick = { numberString = AddNumber(numberString, "7") }, modifier = Modifier.weight(1f))
-                                fancyButton(label = "8",onClick = { numberString = AddNumber(numberString, "8") }, modifier = Modifier.weight(1f))
-                                fancyButton(label = "9",onClick = { numberString = AddNumber(numberString, "9") }, modifier = Modifier.weight(1f))
-                                fancyButton(label = "C", isOperation = true, onClick = { numberString = "0" }, modifier = Modifier.weight(1f))
+                                fancyButton(label = "7",onClick = { numberString = AddNumber(numberString, "7") },modifier = Modifier.weight(1f) )
+                                fancyButton(label = "8",onClick = { numberString = AddNumber(numberString, "8") },modifier = Modifier.weight(1f) )
+                                fancyButton(label = "9",onClick = { numberString = AddNumber(numberString, "9") },modifier = Modifier.weight(1f) )
+                                fancyButton(label = "C", isOperation = true, onClick = { numberString = "0" },modifier = Modifier.weight(1f) )
                         }
                         Row{
-                                fancyButton(label = "4",onClick = { numberString = AddNumber(numberString, "4") }, modifier = Modifier.weight(1f))
-                                fancyButton(label = "5",onClick = { numberString = AddNumber(numberString, "5") }, modifier = Modifier.weight(1f))
-                                fancyButton(label = "6",onClick = { numberString = AddNumber(numberString, "6") }, modifier = Modifier.weight(1f))
-                                fancyButton(label = "+", isOperation = true, onClick = { secondNumber = numberString; operation = CalculatorOperation.Add; numberString = "0" }, modifier = Modifier.weight(1f))
+                                fancyButton(label = "4",onClick = { numberString = AddNumber(numberString, "4") },modifier = Modifier.weight(1f) )
+                                fancyButton(label = "5",onClick = { numberString = AddNumber(numberString, "5") },modifier = Modifier.weight(1f) )
+                                fancyButton(label = "6",onClick = { numberString = AddNumber(numberString, "6") },modifier = Modifier.weight(1f) )
+                                fancyButton(label = "+", isOperation = true, onClick = { secondNumber = numberString; operation = CalculatorOperation.Add; numberString = "0" },modifier = Modifier.weight(1f) )
                         }
                         Row {
-                                fancyButton(label = "1",onClick = { numberString = AddNumber(numberString, "1") }, modifier = Modifier.weight(1f))
-                                fancyButton(label = "2",onClick = { numberString = AddNumber(numberString, "2") }, modifier = Modifier.weight(1f))
-                                fancyButton(label = "3",onClick = { numberString = AddNumber(numberString, "3") }, modifier = Modifier.weight(1f))
-                                fancyButton(label = "-", isOperation = true, onClick = { secondNumber = numberString; operation = CalculatorOperation.Subtract; numberString = "0" }, modifier = Modifier.weight(1f))
+                                fancyButton(label = "1",onClick = { numberString = AddNumber(numberString, "1") },modifier = Modifier.weight(1f))
+                                fancyButton(label = "2",onClick = { numberString = AddNumber(numberString, "2") },modifier = Modifier.weight(1f))
+                                fancyButton(label = "3",onClick = { numberString = AddNumber(numberString, "3") },modifier = Modifier.weight(1f))
+                                fancyButton(label = "-", isOperation = true, onClick = { secondNumber = numberString; operation = CalculatorOperation.Subtract; numberString = "0" },modifier = Modifier.weight(1f))
                         }
                         Row {
                                 fancyButton(label = "" ,onClick = { /*TODO*/ },modifier = Modifier.weight(1f))
-                                fancyButton(label = "0",onClick = { numberString = AddNumber(numberString, "0") }, modifier = Modifier.weight(1f))
-                                fancyButton(label = ".",onClick = { numberString = AddNumber(numberString, ".") }, modifier = Modifier.weight(1f))
+                                fancyButton(label = "0",onClick = { numberString = AddNumber(numberString, "0") },modifier = Modifier.weight(1f) )
+                                fancyButton(label = ".",onClick = { numberString = AddNumber(numberString, ".") },modifier = Modifier.weight(1f) )
                                 fancyButton(label = "=", isOperation = true, onClick = {
                                         when(operation){
                                                 CalculatorOperation.Add ->{ numberString = Soma(numberString.toFloat(), secondNumber.toFloat())}
@@ -83,7 +82,7 @@ fun Subtracao( a: Float, b: Float ): String{
 }
 
 enum class CalculatorOperation{
-        Add, Subtract, Multiply, Divide, Equals
+        Add, Subtract, Multiply, Divide, Equals, Percentage
 }
 
 fun AddNumber(number: String, secondNumber: String): String{
