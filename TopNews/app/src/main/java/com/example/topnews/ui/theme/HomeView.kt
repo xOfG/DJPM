@@ -11,6 +11,10 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,16 +34,9 @@ import java.util.Date
 @Composable
 fun HomeView(modifier: Modifier = Modifier) {
 
-    var articles = arrayListOf(
-        Article(
-            "title1",
-            "description",
-            "https://m.media-amazon.com/images/S/pv-target-images/dbf6812f59e5080cf420f1056bfceb66f7d6a43a8df19ace503ea70596afc0ff.jpg",
-            "url",
-            Date()
-        )
+    var articles by remember { mutableStateOf(listOf<Article>()) }
 
-    )
+
 
     LazyColumn(modifier = Modifier.padding( top = 50.dp)){
         itemsIndexed(
@@ -54,7 +51,7 @@ fun HomeView(modifier: Modifier = Modifier) {
 
         val request = Request.Builder()
             .url("\n" +
-                    "https://newsapi.org/v2/everything?q=apple&from=2024-10-14&to=2024-10-14&sortBy=popularity&apiKey=134b05c86a4649558ffda9f98b8ca6c8")
+                    "https://newsapi.org/v2/everything?q=tesla&from=2024-09-15&sortBy=publishedAt&apiKey=134b05c86a4649558ffda9f98b8ca6c8")
             .build()
 
         client.newCall(request).enqueue(object : Callback {
