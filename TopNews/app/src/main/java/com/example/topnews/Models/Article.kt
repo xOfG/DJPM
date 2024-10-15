@@ -7,6 +7,6 @@ class Article (
     var description: String? = null,
     var urlToImage: String? = null,
     var url: String? = null,
-    var published: Date? = null,
+    var publishedAt: Date? = null,
 )
 

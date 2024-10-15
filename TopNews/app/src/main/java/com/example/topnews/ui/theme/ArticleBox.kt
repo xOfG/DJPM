@@ -37,9 +37,16 @@ fun ArticleBox(article: Article)
         Column(modifier = Modifier.padding(10.dp).weight(1f)) {
             Text(text = article.title ?: "Null", fontSize = 22.sp, fontWeight = FontWeight.ExtraBold )
             Text(text = article.description ?: "Null")
-            Text(text = article.published.toString(), fontSize = 8.sp, fontWeight = FontWeight.Light)
+            Text(text = article.publishedAt.toString(), fontSize = 8.sp, fontWeight = FontWeight.Light)
         }
     }
 }
 
+/*@Preview(showBackground = true)
+@Composable
+fun ArticleBoxPreview() {
+    TopNewsTheme {
+        ArticleBox()
+    }
+}*/
 
