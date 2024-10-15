@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.topnews.HomeViewModel
 import com.example.topnews.Models.Article
 import okhttp3.Call
 import okhttp3.Callback
@@ -33,8 +34,9 @@ import java.util.Date
 
 @Composable
 fun HomeView(modifier: Modifier = Modifier) {
+    val viewModel = HomeViewModel()
 
-    var articles by remember { mutableStateOf(listOf<Article>()) }
+    val articles by viewModel.articles
 
 
 
@@ -46,45 +48,10 @@ fun HomeView(modifier: Modifier = Modifier) {
         }
     }
 
-    LaunchedEffect(Unit){
-        val client = OkHttpClient()
-
-        val request = Request.Builder()
-            .url("\n" +
-                    "https://newsapi.org/v2/everything?q=tesla&from=2024-09-15&sortBy=publishedAt&apiKey=134b05c86a4649558ffda9f98b8ca6c8")
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                response.use {
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-                    val articlesResult = arrayListOf<Article>()
-                    val result = response.body!!.string()
-                    val jsonResult = JSONObject(result)
-                    val status = jsonResult.getString("status")
-                    if (status == "ok") {
-                        val articlesJson = jsonResult.getJSONArray("articles")
-                        for (index in 0 until articlesJson.length()) {
-                            val articleJson = articlesJson.getJSONObject(index)
-                            val article = Article(
-                                title = articleJson.getString("title"),
-                                description = articleJson.getString("description"),
-                                urlToImage = articleJson.getString("urlToImage"),
-                                url = articleJson.getString("url"),
-                                publishedAt = Date())
-                            articlesResult.add(article)
-                        }
-                    }
-                    articles = articlesResult
-
-                }
-            }
-        })
+    LaunchedEffect(Unit) {
+        viewModel.fetchArticles()
     }
+
     }
 
 
