@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,14 +62,17 @@ fun ArticleBox(modifier: Modifier = Modifier, article: Article) {
             Text(text = article.description?: "",
                 maxLines = 4,
                 overflow = TextOverflow.Ellipsis,)
-            Text(text = article.publishedAt?.toYYYYMMDD()?:"")
+            Text(text = article.publishedAt?.toYYYYMMDD()?:"",
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Light,
+                textAlign = TextAlign.End)
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun RowArticlePreview() {
+fun ArticleBoxPreview() {
     TopNewsTheme {
         ArticleBox(article = Article(
             "Title",
