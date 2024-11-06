@@ -17,6 +17,7 @@ class Player {
 
     var bitmap : Bitmap
     var boosting = false
+    var projectiles = mutableListOf<Projectile>()
 
     private val GRAVITY = -10
     private val MAX_SPEED = 20
@@ -41,6 +42,12 @@ class Player {
         detectCollision = Rect(x, y, bitmap.width, bitmap.height)
     }
 
+    fun shoot() {
+        // Create a new projectile at the player's current position
+        val projectile = Projectile(x + bitmap.width, y + bitmap.height / 2, 20) // Speed can be adjusted
+        projectiles.add(projectile)
+    }
+
     fun update(){
         if (boosting) speed += 2
         else speed -= 5
@@ -56,6 +63,13 @@ class Player {
         detectCollision.top = y
         detectCollision.right = x + bitmap.width
         detectCollision.bottom = y + bitmap.height
+
+        // Update projectiles
+        for (projectile in projectiles) {
+            projectile.update()
+        }
+        // Remove off-screen projectiles
+        projectiles.removeAll { it.x > maxX }
 
 
     }

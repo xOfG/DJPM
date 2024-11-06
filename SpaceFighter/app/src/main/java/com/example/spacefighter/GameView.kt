@@ -75,26 +75,43 @@ class GameView : SurfaceView, Runnable {
     }
 
 
-    fun update(){
-
+    fun update() {
+        // Reset boom position
         boom.x = -300
         boom.y = -300
 
-        for (s in stars){
+        // Update stars
+        for (s in stars) {
             s.update(player.speed)
         }
-        for (e in enemies){
+
+        // Update enemies and check for player collisions
+        for (e in enemies) {
             e.update(player.speed)
             if (Rect.intersects(player.detectCollision, e.detectCollision)) {
-
-
                 boom.x = e.x
                 boom.y = e.y
-
-                e.x = -300
+                e.x = -300 // Move the enemy off-screen
             }
-
         }
+
+        // Update projectiles and check for collisions with enemies
+        for (i in player.projectiles.indices.reversed()) {
+            val projectile = player.projectiles[i]
+            projectile.update() // Update the projectile position
+            for (e in enemies) {
+                if (Rect.intersects(projectile.detectCollision, e.detectCollision)) {
+                    // Handle collision
+                    boom.x = e.x
+                    boom.y = e.y
+                    e.x = -300 // Move the enemy off-screen
+                    player.projectiles.remove(projectile) // Remove the projectile
+                    break // Exit the loop to avoid ConcurrentModificationException
+                }
+            }
+        }
+
+        // Update player
         player.update()
     }
 
@@ -120,6 +137,10 @@ class GameView : SurfaceView, Runnable {
             }
             canvas.drawBitmap(boom.bitmap, boom.x.toFloat(), boom.y.toFloat(), paint)
 
+            // Draw projectiles
+            for (projectile in player.projectiles) {
+                projectile.draw(canvas)
+            }
 
             surfaceHolder.unlockCanvasAndPost(canvas)
         }
@@ -130,9 +151,10 @@ class GameView : SurfaceView, Runnable {
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        when(event?.action){
+        when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
                 player.boosting = true
+                player.shoot() // Shoot a projectile when the screen is touched
             }
             MotionEvent.ACTION_UP -> {
                 player.boosting = false
